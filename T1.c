@@ -1,19 +1,25 @@
-/* An example of an ERROR for some 64-bit architectures,
-if "unsigned int" is 32 bits and "size_t" is 64 bits: */
-#include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include <stdlib.h>
-void *mymalloc(unsigned int size) { return malloc(size); }
+#include <string.h>
+#define MAX 100
 
-int main()
+int main(int argc, char**argv)
 {
-    char *buf;
-    size_t len;
-    read(0, &len, sizeof(len));
-    /* we forgot to check the maximum length */
-    /* 64-bit size_t gets truncated to 32-bit unsigned int */
-    buf = mymalloc(len);
-    read(0, buf, len);
+    char buf[MAX];
+    if(argc != 3 ) {
+        printf("Usage: <Input Size> <Input String>\n");
+        return 0;
+    }
+    //Initialize buffer
+    for(int i=0;i <100;i++){
+        buf[i] = '\0';
+    }
+    //Get the input size 
+    int size = atoi(argv[1]);
+
+    if(size < 100){
+        strncpy(buf, argv[2], size);
+        printf("%s\n", buf);
+    }
     return 0;
 }
-
